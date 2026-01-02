@@ -157,7 +157,8 @@ class module:
             print('\t \n', file=file,  end='', sep='')
 
             for node in self.node_weight:
-                print('\tfree(', node, '_out);\n', file=file,  end='', sep='')
+                if self.node_true[node]:
+                    print('\tfree(', node, '_out);\n', file=file,  end='', sep='')
 
             print('\t \n', file=file,  end='', sep='')
             print('\treturn out; \n', file=file,  end='', sep='')
