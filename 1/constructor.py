@@ -94,51 +94,52 @@ class module:
             file.write('\n')
             file.write('void calc (const uint8_t in [], uint8_t out [])\n')
             file.write('{\n')
-            pref_name = "in"
+
             for node in self.node_weight:
-                inp_n = self.gate_dict[self.node_dict[node]]["inw"]
-                out_n = self.gate_dict[self.node_dict[node]]["outw"]
+                if self.node_true[node]:
+                    inp_n = self.gate_dict[self.node_dict[node]]["inw"]
+                    out_n = self.gate_dict[self.node_dict[node]]["outw"]
 
-                print('\tuint8_t* ', node, '_in = calloc(', (inp_n//8)+1,', sizeof(uint8_t));\n', file=file,  end='', sep='')
-                print('\tuint8_t* ', node, '_out = calloc(', (out_n//8)+1,', sizeof(uint8_t));\n', file=file,  end='', sep='')
+                    print('\tuint8_t* ', node, '_in = calloc(', (inp_n//8)+1,', sizeof(uint8_t));\n', file=file,  end='', sep='')
+                    print('\tuint8_t* ', node, '_out = calloc(', (out_n//8)+1,', sizeof(uint8_t));\n', file=file,  end='', sep='')
 
-                for i in range(inp_n):
-                    i_node, is_num = node_name(self.node_connects[node + str(i)])
-                    i_num, is_num = node_num(self.node_connects[node + str(i)])
-                    print('\t', node, '_in[', i//8, '] |= ', file=file,  end='', sep='')
-                    if(is_num):
-                        print('(in[', file=file,  end='', sep='')
-                    else:
-                        print('(', i_node,'_out[', file=file,  end='', sep='')    
+                    for i in range(inp_n):
+                        i_node, is_num = node_name(self.node_connects[node + str(i)])
+                        i_num, is_num = node_num(self.node_connects[node + str(i)])
+                        print('\t', node, '_in[', i//8, '] |= ', file=file,  end='', sep='')
+                        if(is_num):
+                            print('(in[', file=file,  end='', sep='')
+                        else:
+                            print('(', i_node,'_out[', file=file,  end='', sep='')    
+                        
+                        print(i_num//8 ,'] & (1 << ', i_num%8,'));\n', file=file,  end='', sep='')
+
+                    print('\t \n', file=file,  end='', sep='')
+
+                    print('\tuint256_t ', node, '_table[] = ', self.gate_dict[self.node_dict[node]]["table"] ,';\n', file=file,  end='', sep='')
+
+                    print('\t \n', file=file,  end='', sep='')
+
+                    print('\tuint256_t ', node, '_in_ex = 0;\n', file=file,  end='', sep='')
+
+                    for i in range(inp_n//8 + 1, 0, -1):
+                        print('\t', node, '_in_ex += ', node, '_in_ex*256 + (uint256_t)(', node, '_in[', i,']);\n', file=file,  end='', sep='')
+
+                    print('\tuint256_t ', node, '_out_ex = (',node ,'_table[', node,'_in_ex]); \n', file=file,  end='', sep='')
+
+                    print('\t \n', file=file,  end='', sep='')
+
+                    for i in range(out_n//8 + 1):
+                        print('\t', node, '_out[', i,'] = ', node, '_out_ex >> ', 8*i,';\n', file=file,  end='', sep='')
                     
-                    print(i_num//8 ,'] & (1 << ', i_num%8,'));\n', file=file,  end='', sep='')
+                    #print(i_num//8 ,'] & (1 << ', i_num,'));\n', file=file,  end='', sep='')
 
-                print('\t \n', file=file,  end='', sep='')
+                    print('\t \n', file=file,  end='', sep='')
 
-                print('\tuint256_t ', node, '_table[] = ', self.gate_dict[self.node_dict[node]]["table"] ,';\n', file=file,  end='', sep='')
+                    print('\tfree(', node, '_in);\n', file=file,  end='', sep='')
 
-                print('\t \n', file=file,  end='', sep='')
-
-                print('\tuint256_t ', node, '_in_ex = 0;\n', file=file,  end='', sep='')
-
-                for i in range(inp_n//8 + 1, 0, -1):
-                    print('\t', node, '_in_ex += ', node, '_in_ex*256 + (uint256_t)(', node, '_in[', i,']);\n', file=file,  end='', sep='')
-
-                print('\tuint256_t ', node, '_out_ex = (',node ,'_table[', node,'_in_ex]); \n', file=file,  end='', sep='')
-
-                print('\t \n', file=file,  end='', sep='')
-
-                for i in range(out_n//8 + 1):
-                    print('\t', node, '_out[', i,'] = ', node, '_out_ex >> ', 8*i,';\n', file=file,  end='', sep='')
-                
-                #print(i_num//8 ,'] & (1 << ', i_num,'));\n', file=file,  end='', sep='')
-
-                print('\t \n', file=file,  end='', sep='')
-
-                print('\tfree(', node, '_in);\n', file=file,  end='', sep='')
-
-                print('\t \n', file=file,  end='', sep='')
-                print('\t \n', file=file,  end='', sep='')
+                    print('\t \n', file=file,  end='', sep='')
+                    print('\t \n', file=file,  end='', sep='')
             
             i = 0
             for node in self.out:
