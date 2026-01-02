@@ -94,8 +94,6 @@ void calc (const uint8_t in [], uint8_t out [])
 	free(C_out);
 	free(E_out);
 	free(D_out);
-	 
-	return out; 
 
 
 }
