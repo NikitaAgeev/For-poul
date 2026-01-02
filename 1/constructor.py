@@ -116,16 +116,20 @@ class module:
 
                     print('\t \n', file=file,  end='', sep='')
 
-                    print('\tuint256_t ', node, '_table[] = ', self.gate_dict[self.node_dict[node]]["table"] ,';\n', file=file,  end='', sep='')
+                    print('\tuint64_t ', node, '_table[] = {', file=file,  end='', sep='')
+                    table_arr = self.gate_dict[self.node_dict[node]]["table"]
+                    for i in range(len(table_arr) - 1):
+                        print(table_arr[i], ', ', file=file,  end='', sep='')
+                    print(table_arr[len(table_arr)-1], ' };\n', file=file,  end='', sep='')
 
                     print('\t \n', file=file,  end='', sep='')
 
-                    print('\tuint256_t ', node, '_in_ex = 0;\n', file=file,  end='', sep='')
+                    print('\tuint64_t ', node, '_in_ex = 0;\n', file=file,  end='', sep='')
 
                     for i in range(inp_n//8 + 1, 0, -1):
-                        print('\t', node, '_in_ex += ', node, '_in_ex*256 + (uint256_t)(', node, '_in[', i,']);\n', file=file,  end='', sep='')
+                        print('\t', node, '_in_ex += ', node, '_in_ex*256 + (uint64_t)(', node, '_in[', i,']);\n', file=file,  end='', sep='')
 
-                    print('\tuint256_t ', node, '_out_ex = (',node ,'_table[', node,'_in_ex]); \n', file=file,  end='', sep='')
+                    print('\tuint64_t ', node, '_out_ex = (',node ,'_table[', node,'_in_ex]); \n', file=file,  end='', sep='')
 
                     print('\t \n', file=file,  end='', sep='')
 
