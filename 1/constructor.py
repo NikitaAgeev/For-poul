@@ -184,11 +184,13 @@ with open(in_file, "r") as file:
 
 m_1 = module(data)
 
-print(m_1.sort())
+result = m_1.sort()
 
-#print(m_1.node_weight)
-#print(m_1.node_in_calc)
+if result == "all good":
+    m_1.c_dump(out_file)
+    print("Dump at file:", out_file, "complited")
+else:
+    print("logic loop detected(")
 
-m_1.c_dump(out_file)
 
 
