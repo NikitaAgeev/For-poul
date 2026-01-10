@@ -108,11 +108,11 @@ class module:
                         i_num, is_num = node_num(self.node_connects[node + str(i)])
                         print('\t', node, '_in[', i//8, '] |= ', file=file,  end='', sep='')
                         if(is_num):
-                            print('(in[', file=file,  end='', sep='')
+                            print('((in[', file=file,  end='', sep='')
                         else:
-                            print('(', i_node,'_out[', file=file,  end='', sep='')    
+                            print('((', i_node,'_out[', file=file,  end='', sep='')    
                         
-                        print(i_num//8 ,'] & (1 << ', i_num%8,'));\n', file=file,  end='', sep='')
+                        print(i_num//8 ,'] >> ', i_num%8, ') & 1) << ', i%8,';\n', file=file,  end='', sep='')
 
                     print('\t \n', file=file,  end='', sep='')
 
@@ -126,7 +126,7 @@ class module:
 
                     print('\tuint64_t ', node, '_in_ex = 0;\n', file=file,  end='', sep='')
 
-                    for i in range(inp_n//8 + 1, 0, -1):
+                    for i in range(inp_n//8, -1, -1):
                         print('\t', node, '_in_ex += ', node, '_in_ex*256 + (uint64_t)(', node, '_in[', i,']);\n', file=file,  end='', sep='')
 
                     print('\tuint64_t ', node, '_out_ex = (',node ,'_table[', node,'_in_ex]); \n', file=file,  end='', sep='')
@@ -145,14 +145,17 @@ class module:
                     print('\t \n', file=file,  end='', sep='')
                     print('\t \n', file=file,  end='', sep='')
             
-            i = 0
+            for i in range(len(self.out)//8 + 1):
+                print('\tout[', i, '] = 0;\n', file=file,  end='', sep='')
+            
+            i = len(self.out) - 1
             for node in self.out:
                 i_node, is_num = node_name(node)
                 i_num, is_num = node_num(node)
             
-                print('\tout[', i//8, '] |= (', i_node,'_out[', i_num//8 ,'] & (1 << ', i_num%8,'));\n', file=file,  end='', sep='')
+                print('\tout[', i//8, '] |= ((', i_node,'_out[', i_num//8 ,'] >> ', i_num%8,') & 1) << ', i%8,';\n', file=file,  end='', sep='')
 
-                i += 1
+                i -= 1
 
             print('\t \n', file=file,  end='', sep='')
 
