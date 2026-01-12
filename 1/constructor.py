@@ -42,10 +42,11 @@ class module:
     def sort (self):
         for node_i in self.out:
             #print("Start: ", node_i)
-            node, _ = node_name(node_i)
-            w = self.sort_r(node)
-            if w == "no way":
-                return w
+            node, is_num = node_name(node_i)
+            if not is_num:
+                w = self.sort_r(node)
+                if w == "no way":
+                    return w
         self.node_weight = dict(sorted(self.node_weight.items(), key=lambda item: item[1]))
         return "all good"   
         
@@ -153,7 +154,10 @@ class module:
                 i_node, is_num = node_name(node)
                 i_num, is_num = node_num(node)
             
-                print('\tout[', i//8, '] |= ((', i_node,'_out[', i_num//8 ,'] >> ', i_num%8,') & 1) << ', i%8,';\n', file=file,  end='', sep='')
+                if not is_num:
+                    print('\tout[', i//8, '] |= ((', i_node,'_out[', i_num//8 ,'] >> ', i_num%8,') & 1) << ', i%8,';\n', file=file,  end='', sep='')
+                else:
+                    print('\tout[', i//8, '] |= ((in[', i_num//8 ,'] >> ', i_num%8,') & 1) << ', i%8,';\n', file=file,  end='', sep='')
 
                 i -= 1
 
