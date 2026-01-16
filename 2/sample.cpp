@@ -31,6 +31,6 @@ extern "C"{
 			vpi_printf("OK: ");
 		else
 			vpi_printf("ERROR: ");
-		vpi_printf("%e (%x) add %e (%x) = %e (%lx) vc %e (%lx)\n", *(float*)&a, a, *(float*)&b, b, *(float*)&semp, semp, *(float*)&res, res);
+		vpi_printf("%e (%x) add %e (%x) = %e (%lx) vs %e (%lx)\n", *(float*)&a, a, *(float*)&b, b, *(float*)&semp, semp, *(float*)&res, res);
 	} 
 }
