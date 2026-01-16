@@ -149,8 +149,8 @@ class module:
             for i in range(len(self.out)//8 + 1):
                 print('\tout[', i, '] = 0;\n', file=file,  end='', sep='')
             
-            i = len(self.out) - 1
-            for node in self.out:
+            for i in range(len(self.out)):
+                node = self.out[i]
                 i_node, is_num = node_name(node)
                 i_num, is_num = node_num(node)
             
@@ -159,7 +159,6 @@ class module:
                 else:
                     print('\tout[', i//8, '] |= ((in[', i_num//8 ,'] >> ', i_num%8,') & 1) << ', i%8,';\n', file=file,  end='', sep='')
 
-                i -= 1
 
             print('\t \n', file=file,  end='', sep='')
 

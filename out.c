@@ -87,8 +87,8 @@ void calc (const uint8_t in [], uint8_t out [])
 	 
 	 
 	out[0] = 0;
-	out[0] |= ((C_out[0] >> 0) & 1) << 1;
-	out[0] |= ((D_out[0] >> 0) & 1) << 0;
+	out[0] |= ((C_out[0] >> 0) & 1) << 0;
+	out[0] |= ((D_out[0] >> 0) & 1) << 1;
 	 
 	free(A_out);
 	free(B_out);
