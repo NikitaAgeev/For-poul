@@ -4,6 +4,9 @@
 import "DPI-C" function int unsigned float_add (int unsigned a, int unsigned b);
 
 import "DPI-C" function int unsigned float_cmp (int unsigned a, int unsigned b);
+
+import "DPI-C" function void tr_print (int unsigned a, int unsigned b, int unsigned semp, int unsigned res, int unsigned cmp_res);
+
 /* verilator coverage_off */
 module top();
     
@@ -20,6 +23,9 @@ module top();
     wire i_a_ack, i_b_ack, o_z_strb;
 
     reg err = 1'b0;
+
+    reg act_state = 1'b0;
+    reg [15:0] timer = 6'b0; 
 
 /* verilator coverage_on */
     adder dut (
@@ -95,11 +101,14 @@ module top();
     end
 
     always begin
-        repeat (1000000) @(posedge clk);
+        while ((act_state == 0) | (timer < 300))begin
+            @(posedge clk);
+            timer = (act_state)? timer + 1: 0;
+            //$display("%d", timer);
+        end
 
-        #1000000
 
-        $display ("Test to long");
+        $display ("calk to long");
         $display ("#----------------------------------------#");
         $display ("|                                        |");
         $display ("|              Test Failed               |");
@@ -112,6 +121,9 @@ module top();
     task calk(int unsigned a, int unsigned b); 
         //окак, я думал как паралелить ввод аргументов, но оказалось они получаеются последовательно
         
+        timer = 0;
+        act_state = 1;
+
         // A inp
         //$display ("A1");
         while (i_a_ack != 1'b1)
@@ -151,6 +163,9 @@ module top();
         @(posedge clk);
         o_z_ack = 1'b0;
 
+        act_state = 0;
+        timer = 0;
+
     endtask
 
     task calk_semp(int unsigned a, int unsigned b);
@@ -161,21 +176,7 @@ module top();
         calk(a, b);
         calk_semp(a, b);
 
-        if (float_cmp(res, semp))
-            $display ("From RTL: OK : %.3e (%x) add %.3e (%x) = %.3e (%x) vs %.3e (%x)\n",
-	                    $bitstoreal(a), a,
-	                    $bitstoreal(b), b,
-                    	$bitstoreal(semp), semp,
-	                    $bitstoreal(res), res);
-        else begin
-            err = 1'b1;
-            $display ("From RTL: ERROR : %.3e (%x) add %.3e (%x) = %.3e (%x) vs %.3e (%x)\n",
-	                    $bitstoreal(a), a,
-	                    $bitstoreal(b), b,
-                    	$bitstoreal(semp), semp,
-	                    $bitstoreal(res), res);
-        end
-
+        tr_print(a, b, semp, res, float_cmp(res, semp));
     endtask
 
 endmodule

@@ -20,6 +20,8 @@ extern "C" {
     extern unsigned int float_add(unsigned int a, unsigned int b);
     // DPI import at tb.sv:6:38
     extern unsigned int float_cmp(unsigned int a, unsigned int b);
+    // DPI import at tb.sv:8:30
+    extern void tr_print(unsigned int a, unsigned int b, unsigned int semp, unsigned int res, unsigned int cmp_res);
 
 #ifdef __cplusplus
 }

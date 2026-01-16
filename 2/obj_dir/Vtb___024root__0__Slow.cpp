@@ -18,7 +18,8 @@ VL_ATTR_COLD void Vtb___024root___eval_static(Vtb___024root* vlSelf) {
     vlSelfRef.top__DOT__i_a_strb = 0U;
     vlSelfRef.top__DOT__i_b_strb = 0U;
     vlSelfRef.top__DOT__o_z_ack = 0U;
-    vlSelfRef.top__DOT__err = 0U;
+    vlSelfRef.top__DOT__act_state = 0U;
+    vlSelfRef.top__DOT__timer = 0U;
     vlSelfRef.top__DOT__file = 0U;
     vlSelfRef.top__DOT__test_num = 0U;
     vlSelfRef.top__DOT__filename = ""s;
@@ -39,7 +40,8 @@ VL_ATTR_COLD void Vtb___024root___eval_static__TOP(Vtb___024root* vlSelf) {
     vlSelfRef.top__DOT__i_a_strb = 0U;
     vlSelfRef.top__DOT__i_b_strb = 0U;
     vlSelfRef.top__DOT__o_z_ack = 0U;
-    vlSelfRef.top__DOT__err = 0U;
+    vlSelfRef.top__DOT__act_state = 0U;
+    vlSelfRef.top__DOT__timer = 0U;
     vlSelfRef.top__DOT__file = 0U;
     vlSelfRef.top__DOT__test_num = 0U;
     vlSelfRef.top__DOT__filename = ""s;
@@ -70,7 +72,7 @@ VL_ATTR_COLD void Vtb___024root___eval_settle(Vtb___024root* vlSelf) {
 #ifdef VL_DEBUG
             Vtb___024root___dump_triggers__stl(vlSelfRef.__VstlTriggered, "stl"s);
 #endif
-            VL_FATAL_MT("tb.sv", 8, "", "Settle region did not converge after 100 tries");
+            VL_FATAL_MT("tb.sv", 11, "", "Settle region did not converge after 100 tries");
         }
         __VstlIterCount = ((IData)(1U) + __VstlIterCount);
     } while (Vtb___024root___eval_phase__stl(vlSelf));
@@ -340,7 +342,8 @@ VL_ATTR_COLD void Vtb___024root___ctor_var_reset(Vtb___024root* vlSelf) {
     vlSelf->top__DOT__i_a_strb = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17701811495587171720ull);
     vlSelf->top__DOT__i_b_strb = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 17364627982973426690ull);
     vlSelf->top__DOT__o_z_ack = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3372630576731460144ull);
-    vlSelf->top__DOT__err = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 454479852320129227ull);
+    vlSelf->top__DOT__act_state = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 3347021774161388184ull);
+    vlSelf->top__DOT__timer = VL_SCOPED_RAND_RESET_I(16, __VscopeHash, 11514296852276017520ull);
     vlSelf->top__DOT__file = 0;
     vlSelf->top__DOT__test_num = VL_SCOPED_RAND_RESET_I(32, __VscopeHash, 17587492229143368264ull);
     vlSelf->top__DOT__dut__DOT__s_output_z_stb = VL_SCOPED_RAND_RESET_I(1, __VscopeHash, 9976685025521330867ull);

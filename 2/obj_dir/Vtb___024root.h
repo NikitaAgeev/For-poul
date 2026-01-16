@@ -26,7 +26,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtb___024root final {
         CData/*0:0*/ top__DOT__i_a_strb;
         CData/*0:0*/ top__DOT__i_b_strb;
         CData/*0:0*/ top__DOT__o_z_ack;
-        CData/*0:0*/ top__DOT__err;
+        CData/*0:0*/ top__DOT__act_state;
         CData/*0:0*/ top__DOT__dut__DOT__s_output_z_stb;
         CData/*0:0*/ top__DOT__dut__DOT__s_input_a_ack;
         CData/*0:0*/ top__DOT__dut__DOT__s_input_b_ack;
@@ -56,6 +56,7 @@ class alignas(VL_CACHE_LINE_BYTES) Vtb___024root final {
         CData/*0:0*/ __VdlySet__top__DOT__clk__v0;
         CData/*0:0*/ __VstlFirstIteration;
         CData/*0:0*/ __Vtrigprevexpr___TOP__top__DOT__clk__0;
+        SData/*15:0*/ top__DOT__timer;
         SData/*9:0*/ top__DOT__dut__DOT__a_e;
         SData/*9:0*/ top__DOT__dut__DOT__b_e;
         SData/*9:0*/ top__DOT__dut__DOT__z_e;
@@ -84,9 +85,9 @@ class alignas(VL_CACHE_LINE_BYTES) Vtb___024root final {
         IData/*31:0*/ top__DOT__dut__DOT____Vtogcov__z;
         IData/*26:0*/ top__DOT__dut__DOT____Vtogcov__a_m;
         IData/*26:0*/ top__DOT__dut__DOT____Vtogcov__b_m;
-        IData/*23:0*/ top__DOT__dut__DOT____Vtogcov__z_m;
     };
     struct {
+        IData/*23:0*/ top__DOT__dut__DOT____Vtogcov__z_m;
         IData/*27:0*/ top__DOT__dut__DOT____Vtogcov__sum;
         IData/*31:0*/ __VactIterCount;
         VlUnpacked<QData/*63:0*/, 1> __VstlTriggered;

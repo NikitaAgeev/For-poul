@@ -11,7 +11,7 @@ Vtb__Syms::Vtb__Syms(VerilatedContext* contextp, const char* namep, Vtb* modelp)
     , TOP{this, namep}
 {
     // Check resources
-    Verilated::stackCheck(402);
+    Verilated::stackCheck(438);
     // Setup sub module instances
     TOP____024unit.ctor(this, "$unit");
     // Configure time unit / time precision
