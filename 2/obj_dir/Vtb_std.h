@@ -2,8 +2,8 @@
 // DESCRIPTION: Verilator output: Design internal header
 // See Vtb.h for the primary calling header
 
-#ifndef VERILATED_VTB___024UNIT_H_
-#define VERILATED_VTB___024UNIT_H_  // guard
+#ifndef VERILATED_VTB_STD_H_
+#define VERILATED_VTB_STD_H_  // guard
 
 #include "verilated.h"
 #include "verilated_timing.h"
@@ -12,7 +12,7 @@
 
 class Vtb__Syms;
 
-class alignas(VL_CACHE_LINE_BYTES) Vtb___024unit final {
+class alignas(VL_CACHE_LINE_BYTES) Vtb_std final {
   public:
 
     // INTERNAL VARIABLES
@@ -20,11 +20,11 @@ class alignas(VL_CACHE_LINE_BYTES) Vtb___024unit final {
     const char* vlNamep;
 
     // CONSTRUCTORS
-    Vtb___024unit() = default;
-    ~Vtb___024unit() = default;
+    Vtb_std() = default;
+    ~Vtb_std() = default;
     void ctor(Vtb__Syms* symsp, const char* namep);
     void dtor();
-    VL_UNCOPYABLE(Vtb___024unit);
+    VL_UNCOPYABLE(Vtb_std);
 
     // INTERNAL METHODS
     void __Vconfigure(bool first);

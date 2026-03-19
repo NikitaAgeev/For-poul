@@ -9,12 +9,16 @@
 #define VERILATED_VTB_H_  // guard
 
 #include "verilated.h"
-#include "verilated_cov.h"
 #include "svdpi.h"
 
 class Vtb__Syms;
 class Vtb___024root;
 class Vtb___024unit;
+class Vtb___024unit__03a__03aprolitariat;
+class Vtb___024unit__03a__03aprolitariat__Vclpkg;
+class Vtb_std;
+class Vtb_std__03a__03aprocess__Vclpkg;
+class Vtb_std__03a__03asemaphore__Vclpkg;
 
 
 // This class is the main interface to the Verilated model
@@ -36,7 +40,11 @@ class alignas(VL_CACHE_LINE_BYTES) Vtb VL_NOT_FINAL : public VerilatedModel {
     // CELLS
     // Public to allow access to /* verilator public */ items.
     // Otherwise the application code can consider these internals.
+    Vtb_std* const __PVT__std;
     Vtb___024unit* const __PVT____024unit;
+    Vtb_std__03a__03asemaphore__Vclpkg* const std__03a__03asemaphore__Vclpkg;
+    Vtb_std__03a__03aprocess__Vclpkg* const std__03a__03aprocess__Vclpkg;
+    Vtb___024unit__03a__03aprolitariat__Vclpkg* const __024unit__03a__03aprolitariat__Vclpkg;
 
     // Root instance pointer to allow access to model internals,
     // including inlined /* verilator public_flat_* */ items.

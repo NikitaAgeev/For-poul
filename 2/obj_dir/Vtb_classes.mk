@@ -10,7 +10,7 @@ VM_C11 = 1
 # Timing enabled?  0/1
 VM_TIMING = 1
 # Coverage output mode?  0/1 (from --coverage)
-VM_COVERAGE = 1
+VM_COVERAGE = 0
 # Parallel builds?  0/1 (from --output-split)
 VM_PARALLEL_BUILDS = 0
 # Tracing output mode?  0/1 (from --trace-fst/--trace-saif/--trace-vcd)
@@ -28,14 +28,25 @@ VM_CLASSES_FAST += \
   Vtb \
   Vtb___024root__0 \
   Vtb___024unit__0 \
+  Vtb_std__03a__03asemaphore__Vclpkg__0 \
+  Vtb_std__03a__03aprocess__Vclpkg__0 \
+  Vtb___024unit__03a__03aprolitariat__Vclpkg__0 \
   Vtb__main \
 
 # Generated module classes, non-fast-path, compile with low/medium optimization
 VM_CLASSES_SLOW += \
   Vtb___024root__Slow \
   Vtb___024root__0__Slow \
+  Vtb_std__Slow \
+  Vtb_std__0__Slow \
   Vtb___024unit__Slow \
   Vtb___024unit__0__Slow \
+  Vtb_std__03a__03asemaphore__Vclpkg__Slow \
+  Vtb_std__03a__03asemaphore__Vclpkg__0__Slow \
+  Vtb_std__03a__03aprocess__Vclpkg__Slow \
+  Vtb_std__03a__03aprocess__Vclpkg__0__Slow \
+  Vtb___024unit__03a__03aprolitariat__Vclpkg__Slow \
+  Vtb___024unit__03a__03aprolitariat__Vclpkg__0__Slow \
 
 # Generated support classes, fast-path, compile with highest optimization
 VM_SUPPORT_FAST += \
@@ -50,8 +61,8 @@ VM_GLOBAL_FAST += \
   verilated \
   verilated_dpi \
   verilated_vpi \
-  verilated_cov \
   verilated_timing \
+  verilated_random \
   verilated_threads \
 
 # Global classes, need linked once per executable, non-fast-path, compile with low/medium optimization

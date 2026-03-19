@@ -32,9 +32,6 @@ int main(int argc, char** argv, char**) {
     // Execute 'final' processes
     topp->final();
 
-    // Write coverage data (since Verilated with --coverage)
-    contextp->coveragep()->write();
-
     // Print statistical summary report
     contextp->statsPrintSummary();
 

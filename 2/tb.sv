@@ -7,6 +7,86 @@ import "DPI-C" function int unsigned float_cmp (int unsigned a, int unsigned b);
 
 import "DPI-C" function void tr_print (int unsigned a, int unsigned b, int unsigned semp, int unsigned res, int unsigned cmp_res);
 
+class prolitariat;
+	rand bit a_sign;
+	rand bit [7:0]  a_exp;
+    rand bit [22:0] a_mant;
+
+    rand bit b_sign;
+	rand bit [7:0]  b_exp;
+    rand bit [22:0] b_mant;
+
+    //rand bit a_inf_val;
+    //rand bit a_nan_val;
+    //rand bit a_norm_val;
+    //rand bit a_zero_val;
+    //rand bit a_denorm_val;
+
+    bit a_inf_val = 1;
+    bit a_nan_val = 1;
+    bit a_norm_val = 1;
+    bit a_zero_val = 1;
+    bit a_denorm_val = 1;
+
+    rand bit [2:0] a_state_rand;
+    constraint a_state_law   {  if(~a_inf_val)  a_state_rand != 3'd0;
+                                if(~a_nan_val)  a_state_rand != 3'd1;
+                                if(~a_norm_val) a_state_rand != 3'd2;
+                                if(~a_zero_val) a_state_rand != 3'd3;
+                                if(~a_denorm_val) a_state_rand != 3'd4;
+                                a_state_rand inside {[3'd0 : 3'd4]}; }
+
+    constraint a_inf_inp_law {  if( a_state_rand == 2'd0) a_exp  == 8'b11111111;
+                                if( a_state_rand == 2'd0) a_mant == 23'b0;
+                                if( a_state_rand == 2'd1) a_exp  == 8'b11111111;
+                                if( a_state_rand == 2'd1) a_mant != 23'b0;
+                                if( a_state_rand == 2'd2) a_exp  != 8'b0;
+                                if( a_state_rand == 2'd2) a_exp  != 8'b11111111;
+                                if( a_state_rand == 2'd3) a_exp  == 8'b0;
+                                if( a_state_rand == 2'd3) a_mant == 23'b0;
+                                if( a_state_rand == 2'd4) a_exp  == 8'b0;
+                                if( a_state_rand == 2'd4) a_mant != 23'b0;} 
+    
+    //rand bit b_inf_val;
+    //rand bit b_nan_val;
+    //rand bit b_norm_val;
+    //rand bit b_zero_val;
+    //rand bit b_denorm_val;
+
+    bit b_inf_val = 1;
+    bit b_nan_val = 1;
+    bit b_norm_val = 1;
+    bit b_zero_val = 1;
+    bit b_denorm_val = 1;
+
+    rand bit [2:0] b_state_rand;
+    constraint b_state_law   {  if(~b_inf_val)  b_state_rand != 3'd0;
+                                if(~b_nan_val)  b_state_rand != 3'd1;
+                                if(~b_norm_val) b_state_rand != 3'd2;
+                                if(~b_zero_val) b_state_rand != 3'd3;
+                                if(~b_denorm_val) b_state_rand != 3'd4;
+                                a_state_rand inside {[3'd0 : 3'd4]}; }
+
+    constraint b_inf_inp_law {  if( b_state_rand == 2'd0) b_exp  == 8'b11111111;
+                                if( b_state_rand == 2'd0) b_mant == 23'b0;
+                                if( b_state_rand == 2'd1) b_exp  == 8'b11111111;
+                                if( b_state_rand == 2'd1) b_mant != 23'b0;
+                                if( b_state_rand == 2'd2) b_exp  != 8'b0;
+                                if( b_state_rand == 2'd2) b_exp  != 8'b11111111;
+                                if( b_state_rand == 2'd3) b_exp  == 8'b0;
+                                if( b_state_rand == 2'd3) b_mant == 23'b0;
+                                if( b_state_rand == 2'd4) b_exp  == 8'b0;
+                                if( b_state_rand == 2'd4) b_mant != 23'b0;} 
+
+    function [31:0] a_to_duble();
+        a_to_duble = {a_sign, a_exp, a_mant};
+    endfunction
+
+    function [31:0] b_to_duble();
+        b_to_duble = {b_sign, b_exp, b_mant};
+    endfunction
+endclass
+
 /* verilator coverage_off */
 module top();
     
@@ -51,6 +131,8 @@ module top();
     string filename = "";
 
     initial begin
+        prolitariat r_data = new;
+        
         rst = 1'b1;
         $display ("Start resset seq\n");
         repeat (3) @(posedge clk);
@@ -78,8 +160,9 @@ module top();
         end
         else if ($value$plusargs("random_mode=%d", test_num)) begin
             while(test_num > 0) begin
-                a = $random;
-                b = $random;
+                r_data.randomize();
+                a = r_data.a_to_duble();
+                b = r_data.b_to_duble();
                 test_loop(a, b);
                 test_num -= 1;
             end

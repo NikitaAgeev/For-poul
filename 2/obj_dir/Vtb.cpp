@@ -9,7 +9,11 @@
 Vtb::Vtb(VerilatedContext* _vcontextp__, const char* _vcname__)
     : VerilatedModel{*_vcontextp__}
     , vlSymsp{new Vtb__Syms(contextp(), _vcname__, this)}
+    , __PVT__std{vlSymsp->TOP.__PVT__std}
     , __PVT____024unit{vlSymsp->TOP.__PVT____024unit}
+    , std__03a__03asemaphore__Vclpkg{vlSymsp->TOP.std__03a__03asemaphore__Vclpkg}
+    , std__03a__03aprocess__Vclpkg{vlSymsp->TOP.std__03a__03aprocess__Vclpkg}
+    , __024unit__03a__03aprolitariat__Vclpkg{vlSymsp->TOP.__024unit__03a__03aprolitariat__Vclpkg}
     , rootp{&(vlSymsp->TOP)}
 {
     // Register model with the context

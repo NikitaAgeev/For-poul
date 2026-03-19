@@ -87,6 +87,8 @@ void vlog_startup_routines(void) {
     cb_data.reason = cbStartOfSimulation;
     cb_data.cb_rtn = pocess_scaner;
     cb_data.obj = NULL;
+
+
     cb_data.time = NULL;
     cb_data.value = NULL;
     cb_data.user_data = module_name;
