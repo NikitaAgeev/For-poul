@@ -39,11 +39,14 @@ void main ()
         mass[i] = rand();
     }
 
+    size_t* stack_start = (size_t*)malloc(length * sizeof(size_t));
+    size_t* stack_stop  = (size_t*)malloc(length * sizeof(size_t));
+
     printf("Start mass: ");
     print_mass(mass, length);
     printf("\n");
 
-    smp_qsort(mass, out_mass, length);
+    smp_qsort(mass, out_mass, length, stack_start, stack_stop);
 
     printf("End mass: ");
     print_mass(out_mass, length);

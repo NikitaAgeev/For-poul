@@ -10,7 +10,7 @@ void swap(uint16_t* a, uint16_t* b) {
     *b = temp;
 }
 
-int smp_qsort (uint16_t* in, uint16_t* out, size_t length)
+int smp_qsort (uint16_t* in, uint16_t* out, size_t length, size_t* stack_start, size_t* stack_stop)
 {
     size_t i = 0;
     uint16_t pivot = 0;
@@ -33,8 +33,6 @@ int smp_qsort (uint16_t* in, uint16_t* out, size_t length)
     }
 
     size_t tale = 0;
-    uint16_t* stack_start = (uint16_t*)malloc(length * sizeof(uint16_t));
-    uint16_t* stack_stop = (uint16_t*)malloc(length * sizeof(uint16_t));
     
     if((stack_start == NULL) | (stack_stop == NULL))
     {
